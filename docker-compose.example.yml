@@ -23,6 +23,26 @@ services:
     networks:
     - default
 
+  php:
+    build:
+      context: ./services/php
+      args:
+        PHP_VERSION: php:${PHP_VERSION}-fpm
+        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        PHP_EXTENSIONS: ${PHP_EXTENSIONS}
+        TZ: "$TZ"
+    # container_name: php
+    ports:
+      - "${PHP_PORT}:9000"
+    volumes: # php配置文件目录 /usr/local/etc/
+      - ${SOURCE_DIR}:/www/:rw
+      #- ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
+      #- ${PHP_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
+      - ${PHP_LOG_DIR}:/var/log/php
+    restart: always
+    networks:
+      - default
+
 
 networks:
   default:
