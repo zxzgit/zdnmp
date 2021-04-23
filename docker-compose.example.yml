@@ -58,6 +58,17 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       TZ: "$TZ"
 
+  sphinx:
+    image: macbre/sphinxsearch:${SPHINX_VERSION}
+    container_name: sphinx${SPHINX_VERSION}
+    ports:
+      - "9306:9306" # bind to local interface only!
+    volumes:
+    - ${DATA_DIR}/sphinx:/opt/sphinx/index/:rw  # directory where sphinx will store index data
+    - ${SPHINX_CONF}:/opt/sphinx/conf/sphinx.conf:rw  # SphinxSE configuration file
+    mem_limit: 512m # match indexer.value from sphinx.conf
+    networks:
+      - default
 
 networks:
   default:
