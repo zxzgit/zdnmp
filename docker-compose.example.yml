@@ -45,7 +45,7 @@ services:
 
   mysql:
     image: mysql:${MYSQL_VERSION}
-    container_name: mysql
+    #container_name: mysql
     ports:
       - "${MYSQL_HOST_PORT}:3306"
     volumes:
@@ -60,7 +60,7 @@ services:
 
   redis:
     image: redis:${REDIS_VERSION}
-    container_name: redis
+    #container_name: redis
     ports:
       - "${REDIS_HOST_PORT}:6379"
     volumes:
@@ -75,7 +75,7 @@ services:
 
   sphinx:
     image: macbre/sphinxsearch:${SPHINX_VERSION}
-    container_name: sphinx${SPHINX_VERSION}
+    #container_name: sphinx${SPHINX_VERSION}
     ports:
       - "9306:9306" # bind to local interface only!
     volumes:
