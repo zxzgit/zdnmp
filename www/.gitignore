@@ -1,4 +1,5 @@
 *
-!localhost/index.html
+!localhost
 !localhost/index.php
+!localhost/index.html
 !.gitignore
