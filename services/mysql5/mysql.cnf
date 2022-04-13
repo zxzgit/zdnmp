@@ -25,5 +25,8 @@ log-error               = /var/lib/mysql/mysql.error.log
 
 default-time-zone       = '+8:00'
 
+#general_log=ON
+#general_log_file = /var/lib/mysql/query_log.log
+
 [mysql]
 default-character-set   = utf8mb4
