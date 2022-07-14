@@ -1,3 +1,6 @@
 *
 !.gitignore
 !localhost.conf
+!common.config
+!php-fpm.config
+!laravel.conf.exmaple
