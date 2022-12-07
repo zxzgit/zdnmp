@@ -4,6 +4,7 @@ FROM ${PHP_VERSION}
 ARG TZ
 ARG PHP_EXTENSIONS
 ARG CONTAINER_PACKAGE_URL
+ARG PHP_EXT_CONFIGURE
 
 
 #RUN sed -i "s/dl-cdn.alpinelinux.org/${CONTAINER_PACKAGE_URL}/g" /etc/apk/repositories
@@ -22,9 +23,9 @@ RUN apt-get update && apt-get install -y \
         libbz2-dev \
         libxml2 libxml2-dev \
         libxslt1-dev libxslt1.1 \
-        tidy libtidy-dev \
-    && docker-php-ext-configure gd  \
-    && docker-php-ext-install -j$(nproc) gd \
+        tidy libtidy-dev
+RUN ${PHP_EXT_CONFIGURE}
+RUN docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql mysqli pgsql \
     && docker-php-ext-install pcntl zip exif bcmath calendar sockets gettext intl bz2 soap xsl xmlrpc tidy
 
