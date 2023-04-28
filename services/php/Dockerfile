@@ -29,11 +29,6 @@ RUN docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql mysqli pgsql \
     && docker-php-ext-install pcntl zip exif bcmath calendar sockets gettext intl bz2 soap xsl xmlrpc tidy
 
-# 额外扩展添加
-COPY ./extensions /tmp/extensions
-WORKDIR /tmp/extensions
-RUN (if [ -f 'install.sh' ]; then (chmod +x install.sh && sh install.sh); fi)
-
 # pdo_mysql,mysqli,mbstring,gd,curl,opcache,zip,pcntl,exif,bcmath,calendar,sockets,gettext,pdo_pgsql,pgsql,intl,bz2,soap,xsl,xmlrpc,tidy,snmp,mcrypt,redis,memcached,swoole,amqp
 RUN pecl install redis memcached  \
     && docker-php-ext-enable redis memcached
@@ -48,6 +43,11 @@ RUN cp "/usr/share/zoneinfo/$TZ" /etc/localtime \
 RUN curl -o /usr/bin/composer https://mirrors.aliyun.com/composer/composer.phar \
     && chmod +x /usr/bin/composer
 ENV COMPOSER_HOME=/tmp/composer
+
+# 额外扩展添加
+COPY ./extensions /tmp/extensions
+WORKDIR /tmp/extensions
+RUN (if [ -f 'install.sh' ]; then (chmod +x install.sh && sh install.sh); fi)
 
 # php image's www-data user uid & gid are 82, change them to 1000 (primary user)
 RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
