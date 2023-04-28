@@ -29,9 +29,14 @@ RUN docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql mysqli pgsql \
     && docker-php-ext-install pcntl zip exif bcmath calendar sockets gettext intl bz2 soap xsl xmlrpc tidy
 
+# 额外扩展添加
+COPY ./extensions /tmp/extensions
+WORKDIR /tmp/extensions
+RUN (if [ -f 'install.sh' ]; then (chmod +x install.sh && sh install.sh); fi)
+
 # pdo_mysql,mysqli,mbstring,gd,curl,opcache,zip,pcntl,exif,bcmath,calendar,sockets,gettext,pdo_pgsql,pgsql,intl,bz2,soap,xsl,xmlrpc,tidy,snmp,mcrypt,redis,memcached,swoole,amqp
-RUN pecl install redis memcached protobuf grpc \
-    && docker-php-ext-enable redis memcached protobuf grpc
+RUN pecl install redis memcached  \
+    && docker-php-ext-enable redis memcached
 
 
 #时区设置

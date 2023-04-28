@@ -1,0 +1,5 @@
+*
+!.gitignore
+!custom-php-ext.example.ini
+!php.ini-development
+!php.ini-production

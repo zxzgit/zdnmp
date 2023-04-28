@@ -40,6 +40,9 @@ services:
       #- ${PHP_PHP_CONF_FILE}:/usr/local/etc/php/php.ini:ro
       #- ${PHP_FPM_CONF_FILE}:/usr/local/etc/php-fpm.d/www.conf:rw
       - ${PHP_LOG_DIR}:/var/log/php
+      - ${PHP_INI_FILE}:/usr/local/etc/php/php.ini
+      # 自定义配置
+      - ./services/php/etc/custom-php-ext.ini:/usr/local/etc/php/conf.d/custom-php-ext.ini
     restart: always
     networks:
       - default
