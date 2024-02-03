@@ -1,0 +1,9 @@
+*
+!.gitignore
+
+# 只想www目录下的文件排除要这牙膏, 需要 !文件夹/ 并且列出其下的所有文件 !www/文件1、!www/文件1 ...
+!www/
+!www/index.html
+!www/index.php
+
+!README.md

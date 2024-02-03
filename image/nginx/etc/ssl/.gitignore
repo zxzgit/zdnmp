@@ -1,0 +1,6 @@
+*
+!.gitignore
+
+!localhost/
+!localhost/localhost.crt
+!localhost/localhost.key
