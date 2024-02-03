@@ -1,5 +1,6 @@
 # docker build --platform=Linux/AMD64 --tag=registry.cn-hangzhou.aliyuncs.com/zxz_test_namespacce1/zxz_test_rep_1:v1.0.0 .
 FROM nginx:1.15.7-alpine
+#FROM nginx:latest
 
 # 配置文件复制
 COPY ./data /data
