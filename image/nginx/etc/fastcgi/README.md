@@ -1,6 +1,6 @@
 # 自定义fastcgi配置
-
-在编辑nginx配置设置请求php-fpm
+- 复制 `php-fpm.bak.conf` 名为 `php-fpm.conf`,根据使用场景修改其内容中 `fastcgi_pass` 的设置
+- 在编辑nginx配置设置请求php-fpm
 
 ````
 server {

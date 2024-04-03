@@ -1,4 +1,4 @@
 *
 !.gitignore
-!php-fpm.conf
+!php-fpm.bak.conf
 !README.md
