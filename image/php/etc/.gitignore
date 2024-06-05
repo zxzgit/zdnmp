@@ -3,3 +3,5 @@
 !custom-php-ext.example.ini
 !php.ini-development
 !php.ini-production
+!www.conf.example
+!README.md

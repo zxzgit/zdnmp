@@ -46,6 +46,7 @@ ENV COMPOSER_HOME=/tmp/composer
 COPY ./etc /temp/php/etc
 RUN (if [ -f '/temp/php/etc/php.ini' ]; then (cp -f /temp/php/etc/php.ini /usr/local/etc/php/php.ini); fi)
 RUN (if [ -f '/temp/php/etc/custom-php-ext.ini' ]; then (cp -f /temp/php/etc/custom-php-ext.ini /usr/local/etc/php/conf.d/custom-php-ext.ini); fi)
+RUN (if [ -f '/temp/php/etc/www.conf' ]; then (cp -f /temp/php/etc/www.conf /usr/local/etc/php-fpm.d/www.conf); fi)
 
 # 代码复制
 COPY ./data /data
