@@ -27,15 +27,20 @@ if($_GET['is_redis_incr'] ?? ''){
     $redis_key_host_qps = $redis_key_host_qps_key_pre . $hostname . ':' . date('Y-m-d_H');
     $show_qps_num = max(1, intval($_GET['get_show_qps_num'] ?? 10)); // qps展示数量
 
+    // 所有qps缓存相关
+    $redis_key_host_all_qps = $redis_key_host_qps_key_pre . 'all' . ':' . date('Y-m-d_H');
+
     // 累计请求uri次数
     $incr_num = $redis->hIncrBy($redis_key_host_request, $_SERVER['REQUEST_URI'], 1);
     $qps_num = $redis->zIncrBy($redis_key_host_qps, 1, date('i:s'));
+    $qps_all_num = $redis->zIncrBy($redis_key_host_all_qps, 1, date('i:s'));
     if($incr_num%10 == 1){
         $redis->sAdd($redis_key_host_set, $hostname);
 
         $redis->expire($redis_key_host_set, 1*60*60);
         $redis->expire($redis_key_host_request, 1*60*60);
         $redis->expire($redis_key_host_qps, 1*60*60);
+        $redis->expire($redis_key_host_all_qps, 1*60*60);
     }
 
     // 获取所有请求uri次数信息
@@ -49,6 +54,11 @@ if($_GET['is_redis_incr'] ?? ''){
         krsort($qps);
         $host_request[$hostname]['qps'][date('Y-m-d_H')] = array_slice($qps, 0, $show_qps_num);
     }
+
+    // 所有qps请求
+    $qps_all = $redis->zRange($redis_key_host_all_qps, 0, -1, ['WITHSCORES' => true]);
+    krsort($qps_all);
+    $print_data['request_all_host']['qps'][date('Y-m-d_H')] = array_slice($qps_all, 0, $show_qps_num);
 
     $print_data['request_static'] = $host_request;
 }
