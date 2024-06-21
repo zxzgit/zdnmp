@@ -104,5 +104,16 @@ services:
       MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
       TZ: "$TZ"
 
+
+  docker-registry:
+    image: registry:${DOCKER_REGISTRY_VERSION}
+    ports:
+      - "${DOCKER_REGISTRY_HOST_PORT}:5000"
+    volumes:
+      - ./data/docker-registry:/var/lib/registry
+    #restart: always
+    networks:
+      - default
+
 networks:
   default:
