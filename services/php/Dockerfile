@@ -30,8 +30,7 @@ RUN docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pcntl zip exif bcmath calendar sockets gettext intl bz2 soap xsl xmlrpc tidy
 
 # pdo_mysql,mysqli,mbstring,gd,curl,opcache,zip,pcntl,exif,bcmath,calendar,sockets,gettext,pdo_pgsql,pgsql,intl,bz2,soap,xsl,xmlrpc,tidy,snmp,mcrypt,redis,memcached,swoole,amqp
-RUN pecl install redis memcached  \
-    && docker-php-ext-enable redis memcached
+#RUN pecl install redis memcached && docker-php-ext-enable redis memcached
 
 
 #时区设置
