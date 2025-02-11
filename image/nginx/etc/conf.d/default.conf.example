@@ -6,6 +6,9 @@ server {
     # 根目录变量设置
     set $server_root_path '/data/web/www';
 
+    # 将主机名添加到请求头 "X-Server-Hostname" 中
+    # add_header 'X-Server-Hostname' $hostname;
+
     root $server_root_path;
     index  index.html index.htm index.php;
     #charset koi8-r;
