@@ -1,0 +1,24 @@
+version: '3.6'
+services:
+  # 部署完成后：安装资料：https://docs.gitlab.com/ee/install/docker/installation.html （不知道为啥使用部署gitlab很卡，可能跟硬件需求有关）
+  # - 需要从 https://gitlab.example.com:30443/ 请求页面，在本机访问，请在 /etc/hosts 中要添加域名重定向： 127.0.0.1 gitlab.example.com，第一次请求要等待一段事件其安装完成
+  # - 可以在容器路径 /etc/gitlab/initial_root_password (这个文件24小时候会被删除，所以最好修改下密码)中查看默认密码，Password: ***， 账号名称：root， 初次登陆也要等待很久的初始化
+  # - 本地clone忽略ssl验证：  GIT_SSL_NO_VERIFY=true git clone https://gitlab.example.com:30443/test/test1.git ./
+  gitlab:
+    image: gitlab/gitlab-ce:17.7.3-ce.0
+    container_name: gitlab
+    restart: always
+    hostname: 'gitlab.example.com'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # Add any other gitlab.rb configuration here, each on its own line
+        external_url 'https://gitlab.example.com'
+    ports: # <local_port>:<contained_port> 首次登陆需要设置初始密码如下，默认用户为 root，需要从 https://gitlab.example.com:30443/ 请求页面，/etc/hosts中要添加域名重定向： 127.0.0.1 gitlab.example.com，第一次请求要等待一段事件其安装完成
+      - '30080:80'
+      - '30443:443'
+      - '30022:22'
+    volumes: # 可以在 /etc/gitlab/initial_root_password 中查看默认密码，Password: ***， 账号名称：root
+      - '${DATA_DIR}/gitlab/config:/etc/gitlab'
+      - '${DATA_DIR}/gitlab/logs:/var/log/gitlab'
+      - '${DATA_DIR}/gitlab/data:/var/opt/gitlab'
+    # shm_size: '1g' # 256m
